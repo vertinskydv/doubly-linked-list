@@ -21,11 +21,19 @@ class LinkedList {
     }
 
     head() {
-        return this._head.data;
+        if (this._head) {
+            return this._head.data;
+        } else {
+            return null;
+        }
     }
 
     tail() {
-        return this._tail.data;
+        if (this._tail) {
+            return this._tail.data;
+        } else {
+            return null;
+        }
     }
 
     at(index) {
@@ -85,35 +93,39 @@ class LinkedList {
     }
 
     reverse() {
-        // let current = this._head;
-        // for (let i = 0; i <= (this.length-1); i++) {
-        //     current.prev = [current.next, current.next = current.prev][0]
-        // }
-        // this._tail = [this._head, this._head = this.tail][0]
+        let current = this._head;
+        for (let i = 0; i <= (this.length - 1); i++) {
+            [current.next, current.prev] = [current.prev, current.next];
 
+            current = current.prev;
+        }
+        [this._tail, this._head] = [this._head, this._tail];
     }
 
-    indexOf(data) {}
+    indexOf(data) {
+        let current = this._head;
+        for (let i = 0; i <= (this.length - 1); i++) {
+            if (current.data == data) {
+                return i;
+            }
+            current = current.next;
+        }
+        return -1;
+    }
 }
 
 module.exports = LinkedList;
 
 
-//
-// var a = new LinkedList();
-// debugger;
-//
-//
-// a.append(0);
-// a.append(1);
-// a.append(2);
-// a.append(3);
-// a.append(4);
-// console.log(a.head());
-// console.log(a.tail());
-// console.log(a.at(1));
-// a.reverse();
-// console.log(a.head());
-// console.log(a.tail());
-// console.log(a.at(1));
-// a.insertAt(1, "new");
+
+var a = new LinkedList();
+debugger;
+
+
+a.append(0);
+a.append(1);
+a.append(2);
+a.append(3);
+a.append("bal");
+a.indexOf(0);
+a.indexOf("bal");
