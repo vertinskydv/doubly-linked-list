@@ -4,5 +4,11 @@ module.exports = {
 		path: './',
 		filename: 'app.bundle.js'
 	},
-	devtool: 'source-map'
+	devtool: 'source-map',
+
+	watch: true,
+
+	watchOptions: {
+		aggregateTimeout: 200
+	}
 };
