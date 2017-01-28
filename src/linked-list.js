@@ -18,6 +18,7 @@ class LinkedList {
             this._tail = node;
             ++this.length;
         }
+        return this;
     }
 
     head() {
@@ -50,6 +51,11 @@ class LinkedList {
     }
 
     insertAt(index, data) {
+        if ((this._head == null) && (this._tail == null)) {
+            let node = new Node(data);
+            this._head = this._tail = node;
+            return this;
+        }
         let current = this._head;
         for (let i = 0; i <= index; i++) {
             if (i == index) {
@@ -61,8 +67,7 @@ class LinkedList {
                 current = current.next;
             }
         }
-
-
+        return this;
     }
 
     isEmpty() {
@@ -76,9 +81,26 @@ class LinkedList {
         this._head = null;
         this._tail = null;
         this.length = 0;
+        return this;
     }
 
     deleteAt(index) {
+        if ((this.length == 1) && (index == 0)) {
+            this.clear();
+            return this;
+        }
+        if (index == 0) {
+            this._head = this._head.next;
+            this._head.prev = null;
+            --this.length;
+            return this;
+        }
+        if (index == this.length - 1) {
+            this._tail = this._tail.prev;
+            this._tail.next = null;
+            -- this.length;
+            return this;
+        }
         let current = this._head;
         for (let i = 0; i <= index; i++) {
             if (i == index) {
@@ -89,10 +111,13 @@ class LinkedList {
                 current = current.next;
             }
         }
-
+        return this;
     }
 
     reverse() {
+        if (this.length == 1) {
+            return this;
+        }
         let current = this._head;
         for (let i = 0; i <= (this.length - 1); i++) {
             [current.next, current.prev] = [current.prev, current.next];
@@ -100,6 +125,7 @@ class LinkedList {
             current = current.prev;
         }
         [this._tail, this._head] = [this._head, this._tail];
+        return this;
     }
 
     indexOf(data) {
@@ -118,14 +144,7 @@ module.exports = LinkedList;
 
 
 
-var a = new LinkedList();
+const list = new LinkedList();
 debugger;
+list.append(4).reverse().deleteAt(0).clear().insertAt(0, 3);
 
-
-a.append(0);
-a.append(1);
-a.append(2);
-a.append(3);
-a.append("bal");
-a.indexOf(0);
-a.indexOf("bal");
